@@ -1,20 +1,29 @@
 package co.edu.escuelaing.arep;
 
-import static spark.Spark.*;
+import java.net.URL;
 
-public class HelloWorld {
+import static spark.Spark.*;
+import static spark.Spark.get;
+
+/**
+ *
+ * @author Ricardo Olarte
+ */
+public class HelloWorldApp {
+
     public static void main(String[] args) {
         port(getPort());
         staticFiles.location("/public");
         secure("keystores/ecikeypair.p12", "ecistore", null, null);
-        get("/hello", (req, res) -> "Hello World, this it´s server2");
+        get("/hello", (req, res) -> "Hello World, this it's server1");
+
         get("/login", (request, response) -> URLReader.secureURL(getAWS(), getKeyStore(), "ecistore"));
     }
     private static int getPort(){
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));
         }
-        return 4000;
+        return 5000;
     }
 
     /**
